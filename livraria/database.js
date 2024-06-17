@@ -10,7 +10,7 @@ db.serialize(() => {
       titulo TEXT,
       autor TEXT,
       genero TEXT,
-      ano INTEGER,
+      imagem TEXT,
       quantidade INTEGER
     )
   `);
@@ -18,11 +18,11 @@ db.serialize(() => {
 
 module.exports = db;
 
-// Inicializando o Banco de Dados do JSON
+// Inicialização do banco de dados com dados do JSON
 const fs = require('fs');
 const Livro = require('./models/livro');
 
-const livrosJson = JSON.parse(fs.readFileSync('livros.json', 'utf8'));
+const livrosJson = JSON.parse(fs.readFileSync('livros.json', 'utf8')).books; // Ajuste para 'books'
 
 livrosJson.forEach((livro) => {
   Livro.criar(livro, (err) => {
