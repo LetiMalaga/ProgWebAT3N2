@@ -42,7 +42,7 @@
 
 
 // database.js
-const db = require('../database'); // Importação do banco de dados SQLite
+const db = require('./database'); // Importação do banco de dados SQLite
 const Livro = require('./models/livro'); // Importação da classe Livro
 const fs = require('fs');
 
