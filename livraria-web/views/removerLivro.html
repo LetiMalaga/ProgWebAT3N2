@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remover Livro</title>
+</head>
+<body>
+    <h1>Remover Livro</h1>
+    <form action="/api/livros/remover/<%= livro.id %>" method="POST">
+        <p>Você tem certeza que deseja remover o livro "<%= livro.nome %>"?</p>
+        <button type="submit">Confirmar Remoção</button>
+    </form>
+</body>
+</html>
