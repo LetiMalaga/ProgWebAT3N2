@@ -1,8 +1,0 @@
-CREATE TABLE livros (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nome TEXT,
-    autor TEXT,
-    genero TEXT,
-    exemplaresDisponiveis INTEGER,
-    imagemCapa TEXT
-);
