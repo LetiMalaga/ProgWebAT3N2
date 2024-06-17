@@ -18,23 +18,27 @@ class Livro {
   }
 
   // Criar um novo livro
-  static criar(dados, callback) {
-    const { titulo, autor, genero, ano, quantidade } = dados;
+  static criar(livro, callback) {
+    const { titulo, autor, genero, imagem } = livro;
     db.run(
-      'INSERT INTO livros (titulo, autor, genero, ano, quantidade) VALUES (?, ?, ?, ?, ?)',
-      [titulo, autor, genero, ano, quantidade],
+      'INSERT INTO livros (titulo, autor, genero, imagem) VALUES (?, ?, ?, ?)',
+      [titulo, autor, genero, imagem],
       function (err) {
-        callback(err, this.lastID); // Retorna o ID do novo livro
+        if (err) {
+          callback(err);
+          return;
+        }
+        callback(null, this.lastID); // Retorna o ID do novo livro
       }
     );
   }
 
   // Atualizar as informações de um livro existente
   static atualizar(id, dados, callback) {
-    const { titulo, autor, genero, ano, quantidade } = dados;
+    const { titulo, autor, genero, imagem } = dados;
     db.run(
-      'UPDATE livros SET titulo = ?, autor = ?, genero = ?, ano = ?, quantidade = ? WHERE id = ?',
-      [titulo, autor, genero, ano, quantidade, id],
+      'UPDATE livros SET titulo = ?, autor = ?, genero = ?, imagem = ? WHERE id = ?',
+      [titulo, autor, genero, imagem, id],
       callback
     );
   }
