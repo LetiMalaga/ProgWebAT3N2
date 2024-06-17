@@ -16,13 +16,11 @@ db.serialize(() => {
   `);
 });
 
-module.exports = db;
-
 // Inicialização do banco de dados com dados do JSON
 const fs = require('fs');
 const Livro = require('./models/livro');
 
-const livrosJson = JSON.parse(fs.readFileSync('livros.json', 'utf8')).books; // Ajuste para 'books'
+const livrosJson = JSON.parse(fs.readFileSync('livros.json', 'utf8')).books;
 
 livrosJson.forEach((livro) => {
   Livro.criar(livro, (err) => {
@@ -31,3 +29,5 @@ livrosJson.forEach((livro) => {
     }
   });
 });
+
+module.exports = db;
