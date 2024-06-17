@@ -1,5 +1,5 @@
 // models/livro.js
-const db = require('./database');
+const db = require('./database.js');
 
 class Livro {
   // Listar todos os livros
