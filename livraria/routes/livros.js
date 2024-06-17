@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const Livro = require('../models/livro');
+const db = require('../database');
 
 // Rota para listagem dos livros
 router.get('/', (req, res) => {

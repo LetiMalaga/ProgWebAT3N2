@@ -2,6 +2,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const livrosRouter = require('./routes/livros');
+const db = require('./database.js');
 
 const app = express();
 const PORT = 3000;
