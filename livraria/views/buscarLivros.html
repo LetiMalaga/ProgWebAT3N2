@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buscar Livro</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <h1>Buscar Livro por Título</h1>
+  <form id="buscar-livro-form">
+    <label for="titulo">Título do Livro:</label>
+    <input type="text" id="titulo" name="titulo" required>
+    <button type="submit">Buscar</button>
+  </form>
+  <div class="livros-container" id="livros-lista"></div>
+
+  <script>
+    document.getElementById('buscar-livro-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const titulo = document.getElementById('titulo').value;
+
+      fetch(`/livros/buscar?titulo=${encodeURIComponent(titulo)}`)
+      .then(response => response.json())
+      .then(data => {
+        const livrosLista = document.getElementById('livros-lista');
+        livrosLista.innerHTML = '';
+        data.forEach(livro => {
+          const div = document.createElement('div');
+          div.className = 'livro-item';
+          div.innerHTML = 
+          `
+            <img src="${livro.imagem}" alt="${livro.titulo}"/>
+            <strong>${livro.titulo}</strong><br/>
+            ${livro.autor}<br/>
+            ${livro.genero}
+          `;
+          livrosLista.appendChild(div);
+        });
+      })
+      .catch(error => console.error('Erro ao buscar livro:', error));
+    });
+  </script>
+</body>
+</html>

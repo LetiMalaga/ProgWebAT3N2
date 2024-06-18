@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compra de Livro</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <h1>Compra de Livro</h1>
+  <form id="compra-livro-form">
+    <label for="livro-id">ID do Livro:</label>
+    <input type="number" id="livro-id" name="livro-id" required>
+    <label for="quantidade">Quantidade:</label>
+    <input type="number" id="quantidade" name="quantidade" required>
+    <button type="submit">Comprar</button>
+  </form>
+
+  <script>
+    document.getElementById('compra-livro-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const id = document.getElementById('livro-id').value;
+      const quantidade = document.getElementById('quantidade').value;
+      
+      fetch(`/livros/${id}/comprar`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ quantidade: quantidade })
+      })
+      .then(response => response.text())
+      .then(message => alert(message))
+      .catch(error => console.error('Erro ao comprar livro:', error));
+    });
+  </script>
+</body>
+</html>

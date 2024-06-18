@@ -8,12 +8,107 @@
 </head>
 <body>
   <h1>Bem-vindo à Livraria</h1>
-  <button id="redirecionar">Listar Livros</button>
+
+
+<h2>Buscar Livro por Título</h2>
+<form id="buscar-livro-form">
+  <label for="titulo">Título do Livro:</label>
+  <input type="text" id="titulo" name="titulo" oninput="filtrarLista()">
+  <button type="submit">Buscar</button>
+</form>
+  <div class="livros-container" id="livros-lista"></div>
+
+  <!-- <button id="listar">Listar livros</button> -->
+  <button id="comprar">Comprar livros</button>
+  <button id="adicionar">Adicionar exemplares de um livro</button>
+  <button id="cadastrar">Cadastrar novos livros</button>
+  <!-- <button id="buscar">Buscar livros</button> -->
+  <button id="editar">Editar informações de um livro no acervo</button>
+  <button id="remover">Remover livros</button>
 
   <script>
-    document.getElementById('redirecionar').addEventListener('click', () => {
-      window.location.href = '/listarLivros.html';
+    // Função para buscar livros por título
+    function buscarLivrosPorTitulo(titulo) {
+      if (titulo.trim() === '') {
+        carregarTodosOsLivros(); // Se a busca estiver vazia, carrega todos os livros
+        return;
+      }
+  
+      fetch(`/livros/buscar?titulo=${encodeURIComponent(titulo)}`)
+        .then(response => response.json())
+        .then(data => {
+          const livrosLista = document.getElementById('livros-lista');
+          livrosLista.innerHTML = ''; // Limpa a lista anterior
+          data.forEach(livro => {
+            const div = document.createElement('div');
+            div.className = 'livro-item';
+            div.innerHTML = 
+            `
+              <img src="${livro.imagem}" alt="${livro.titulo}"/>
+              <strong>${livro.titulo}</strong><br/>
+              ${livro.autor}<br/>
+              ${livro.genero}
+            `;
+            livrosLista.appendChild(div);
+          });
+        })
+        .catch(error => console.error('Erro ao buscar livro:', error));
+    }
+  
+    // Função para carregar todos os livros
+    function carregarTodosOsLivros() {
+      fetch('/livros') // Rota para listar todos os livros
+        .then(response => response.json())
+        .then(data => {
+          const livrosLista = document.getElementById('livros-lista');
+          livrosLista.innerHTML = ''; // Limpa a lista anterior
+          data.forEach(livro => {
+            const div = document.createElement('div');
+            div.className = 'livro-item';
+            div.innerHTML = 
+            `
+              <img src="${livro.imagem}" alt="${livro.titulo}"/>
+              <strong>${livro.titulo}</strong><br/>
+              ${livro.autor}<br/>
+              ${livro.genero}
+            `;
+            livrosLista.appendChild(div);
+          });
+        })
+        .catch(error => console.error('Erro ao carregar lista de livros:', error));
+    }
+  
+    // Evento de submit do formulário de busca
+    document.getElementById('buscar-livro-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const titulo = document.getElementById('titulo').value.trim(); // Obtém o título do livro
+      buscarLivrosPorTitulo(titulo); // Chama a função para buscar livros por título
+    });
+  
+    // Chamada para carregar todos os livros inicialmente
+    document.addEventListener('DOMContentLoaded', carregarTodosOsLivros);
+  
+    // Eventos para redirecionar para outras páginas
+    document.getElementById('comprar').addEventListener('click', () => {
+      window.location.href = '/comprarLivros.html';
+    });
+  
+    document.getElementById('adicionar').addEventListener('click', () => {
+      window.location.href = '/adicionarLivros.html';
+    });
+  
+    document.getElementById('cadastrar').addEventListener('click', () => {
+      window.location.href = '/cadastrarLivros.html';
+    });
+  
+    document.getElementById('editar').addEventListener('click', () => {
+      window.location.href = '/editarLivros.html';
+    });
+  
+    document.getElementById('remover').addEventListener('click', () => {
+      window.location.href = '/removerLivros.html';
     });
   </script>
+  
 </body>
 </html>

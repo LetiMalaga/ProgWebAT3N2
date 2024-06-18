@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Remover Livro</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <h1>Remover Livro</h1>
+  <form id="remover-livro-form">
+    <label for="livro-id">ID do Livro:</label>
+    <input type="number" id="livro-id" name="livro-id" required>
+    <button type="submit">Remover</button>
+  </form>
+
+  <script>
+    document.getElementById('remover-livro-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const id = document.getElementById('livro-id').value;
+
+      fetch(`/livros/${id}`, {
+        method: 'DELETE'
+      })
+      .then(response => response.text())
+      .then(message => alert(message))
+      .catch(error => console.error('Erro ao remover livro:', error));
+    });
+  </script>
+</body>
+</html>
