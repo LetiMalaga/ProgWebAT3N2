@@ -1,4 +1,3 @@
-// routes/livros.js
 const express = require('express');
 const router = express.Router();
 const Livro = require('../models/livro');

@@ -1,4 +1,3 @@
-// models/livro.js
 const db = require('./database.js');
 
 class Livro {

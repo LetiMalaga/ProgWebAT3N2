@@ -1,4 +1,3 @@
-// // database.js
 // const sqlite3 = require('sqlite3').verbose();
 // const db = new sqlite3.Database(':memory:');
 
@@ -41,7 +40,6 @@
 // module.exports = db;
 
 
-// database.js
 const db = require('./database.js'); // Importação do banco de dados SQLite
 const Livro = require('./models/livro'); // Importação da classe Livro
 const fs = require('fs');
