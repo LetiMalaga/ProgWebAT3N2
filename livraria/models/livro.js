@@ -1,4 +1,4 @@
-const db = require('./database.js');
+const db = require('../database');
 
 class Livro {
   // Listar todos os livros

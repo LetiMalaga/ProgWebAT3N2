@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Listar Livros</title>
+</head>
+<body>
+  <h1>Listagem de Livros</h1>
+  <ul id="livros-lista"></ul>
+
+  <script>
+    // Script para buscar e exibir a lista de livros
+    fetch('/livros') // Rota para listar todos os livros
+      .then(response => response.json())
+      .then(data => {
+        const livrosLista = document.getElementById('livros-lista');
+        data.forEach(livro => {
+          const li = document.createElement('li');
+          li.textContent = `${livro.titulo} - ${livro.autor} - ${livro.genero}`;
+          livrosLista.appendChild(li);
+        });
+      })
+      .catch(error => console.error('Erro ao carregar lista de livros:', error));
+  </script>
+</body>
+</html>
