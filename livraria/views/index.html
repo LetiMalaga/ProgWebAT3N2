@@ -4,10 +4,32 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Listar Livros</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    .livros-container {
+      display: flex;
+      overflow-x: auto;
+      white-space: nowrap;
+      padding: 20px;
+    }
+    .livro-item {
+      display: inline-block;
+      margin-right: 20px;
+      text-align: center;
+    }
+    .livro-item img {
+      display: block;
+      margin: 0 auto;
+      width: 100px;
+      height: auto;
+    }
+  </style>
 </head>
 <body>
   <h1>Listagem de Livros</h1>
-  <ul id="livros-lista"></ul>
+  <div class="livros-container" id="livros-lista"></div>
 
   <script>
     // Script para buscar e exibir a lista de livros
@@ -16,12 +38,15 @@
       .then(data => {
         const livrosLista = document.getElementById('livros-lista');
         data.forEach(livro => {
-          const li = document.createElement('li');
-          li.innerHTML = `
-            <img src="${livro.imagem}" alt="${livro.titulo}" style="width:100px;height:auto;"/>
-            <strong>${livro.titulo}</strong> - ${livro.autor} - ${livro.genero}
+          const div = document.createElement('div');
+          div.className = 'livro-item';
+          div.innerHTML = `
+            <img src="${livro.imagem}" alt="${livro.titulo}"/>
+            <strong>${livro.titulo}</strong><br/>
+            ${livro.autor}<br/>
+            ${livro.genero}
           `;
-          livrosLista.appendChild(li);
+          livrosLista.appendChild(div);
         });
       })
       .catch(error => console.error('Erro ao carregar lista de livros:', error));
