@@ -11,14 +11,14 @@
   <form id="compra-livro-form">
     <label for="livro-id">ID do Livro:</label>
     <input type="number" id="livro-id" name="livro-id" required>
-    <label for="exemplares">exemplares:</label>
+    <label for="exemplares">Quantidade:</label>
     <input type="number" id="exemplares" name="exemplares" required>
     <button type="submit">Comprar</button>
   </form>
 
   <div class="livros-container" id="livros-lista"></div>
 
-   <script>
+  <script>
     // Função para carregar todos os livros
     function carregarLivros() {
       fetch('/livros') // Rota para listar todos os livros
@@ -44,22 +44,32 @@
         })
         .catch(error => console.error('Erro ao carregar lista de livros:', error));
     }
+
+    // Função para processar a compra de livros
     document.getElementById('compra-livro-form').addEventListener('submit', function(event) {
       event.preventDefault();
       const id = document.getElementById('livro-id').value;
+      const quantidade = document.getElementById('exemplares').value;
 
-      fetch(`/livros/${id}`, {
-        method: 'DELETE'
+      fetch(`/livros/${id}/comprar`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ quantidade: quantidade })
       })
-      .then(response => response.text())
-      .then(message => alert(message))
-      .catch(error => console.error('Erro ao remover livro:', error));
+      .then(response => response.json())
+      .then(data => {
+        // Exibe mensagem de confirmação da compra
+        alert(`Compra realizada com sucesso! Novo número de exemplares: ${data.exemplares}`);
+        // Atualiza a lista de livros após a compra
+        carregarLivros();
+      })
+      .catch(error => console.error('Erro ao comprar livro:', error));
     });
 
     // Chamada para carregar todos os livros inicialmente
     document.addEventListener('DOMContentLoaded', carregarLivros);
-
-
   </script>
 </body>
 </html>

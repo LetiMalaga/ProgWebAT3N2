@@ -17,6 +17,8 @@
     <input type="text" id="genero" name="genero" required>
     <label for="imagem">URL da Imagem:</label>
     <input type="text" id="imagem" name="imagem">
+    <label for="exemplares">Quantidade de Exemplares:</label>
+    <input type="text" id="exemplares" name="exemplares" required>
     <button type="submit">Cadastrar</button>
   </form>
 
@@ -27,7 +29,8 @@
         titulo: document.getElementById('titulo').value,
         autor: document.getElementById('autor').value,
         genero: document.getElementById('genero').value,
-        imagem: document.getElementById('imagem').value
+        imagem: document.getElementById('imagem').value,
+        exemplares: document.getElementById('exemplares').value
       };
 
       fetch('/livros', {
