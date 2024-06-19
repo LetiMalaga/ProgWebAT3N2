@@ -41,7 +41,7 @@ contarLivros((err, totalLivros) => {
         autor: livro.autor,
         genero: livro.genero,
         imagem: livro.imagem,
-        quantidade: 1 // Quantidade inicial, pode ser ajustada conforme necessário
+        exemplares: livro.exemplares
       }, (err, livroId) => {
         if (err) {
           console.error('Erro ao adicionar livro inicial:', err.message);

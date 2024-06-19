@@ -1,5 +1,5 @@
 const sqlite3 = require('sqlite3').verbose();
-const db = new sqlite3.Database(':memory:');
+const db = new sqlite3.Database('banco.db');
 
 // Criação da tabela de livros
 db.serialize(() => {
@@ -10,17 +10,17 @@ db.serialize(() => {
       autor TEXT,
       genero TEXT,
       imagem TEXT,
-      quantidade INTEGER
+      exemplares INTEGER
     )
   `);
 });
 
 // Função para inserir um livro no banco de dados
 const criarLivro = (livro, callback) => {
-  const { titulo, autor, genero, imagem, quantidade } = livro;
+  const { titulo, autor, genero, imagem, exemplares } = livro;
   db.run(
-    'INSERT INTO livros (titulo, autor, genero, imagem, quantidade) VALUES (?, ?, ?, ?, ?)',
-    [titulo, autor, genero, imagem, quantidade],
+    'INSERT INTO livros (titulo, autor, genero, imagem, exemplares) VALUES (?, ?, ?, ?, ?)',
+    [titulo, autor, genero, imagem, exemplares],
     function (err) {
       if (err) {
         callback(err);

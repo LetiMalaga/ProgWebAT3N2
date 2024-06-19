@@ -47,14 +47,14 @@ class Livro {
     db.run('DELETE FROM livros WHERE id = ?', [id], callback);
   }
 
-  // Comprar um livro (diminuir a quantidade)
-  static comprar(id, quantidade, callback) {
-    db.run('UPDATE livros SET quantidade = quantidade - ? WHERE id = ?', [quantidade, id], callback);
+  // Comprar um livro (diminuir a exemplares)
+  static comprar(id, exemplares, callback) {
+    db.run('UPDATE livros SET exemplares = exemplares - ? WHERE id = ?', [exemplares, id], callback);
   }
 
-  // Adicionar exemplares de um livro (aumentar a quantidade)
-  static adicionarExemplares(id, quantidade, callback) {
-    db.run('UPDATE livros SET quantidade = quantidade + ? WHERE id = ?', [quantidade, id], callback);
+  // Adicionar exemplares de um livro (aumentar a exemplares)
+  static adicionarExemplares(id, exemplares, callback) {
+    db.run('UPDATE livros SET exemplares = exemplares + ? WHERE id = ?', [exemplares, id], callback);
   }
 }
 

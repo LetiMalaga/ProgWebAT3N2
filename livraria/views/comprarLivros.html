@@ -11,28 +11,55 @@
   <form id="compra-livro-form">
     <label for="livro-id">ID do Livro:</label>
     <input type="number" id="livro-id" name="livro-id" required>
-    <label for="quantidade">Quantidade:</label>
-    <input type="number" id="quantidade" name="quantidade" required>
+    <label for="exemplares">exemplares:</label>
+    <input type="number" id="exemplares" name="exemplares" required>
     <button type="submit">Comprar</button>
   </form>
 
-  <script>
+  <div class="livros-container" id="livros-lista"></div>
+
+   <script>
+    // Função para carregar todos os livros
+    function carregarLivros() {
+      fetch('/livros') // Rota para listar todos os livros
+        .then(response => response.json())
+        .then(data => {
+          console.log(data)
+          const livrosLista = document.getElementById('livros-lista');
+          livrosLista.innerHTML = ''; // Limpa a lista anterior
+          data.forEach(livro => {
+            const div = document.createElement('div');
+            div.className = 'livro-item';
+            div.innerHTML = 
+            `
+              <img src="${livro.imagem}" alt="${livro.titulo}" style="max-width: 150px; max-height: 200px;"/>
+              <strong>ID do Livro:</strong> ${livro.id}<br/>
+              <strong>Título:</strong> ${livro.titulo}<br/>
+              <strong>Autor:</strong> ${livro.autor}<br/>
+              <strong>Gênero:</strong> ${livro.genero}<br/>
+              <strong>Número de Exemplares:</strong> ${livro.exemplares}
+            `;
+            livrosLista.appendChild(div);
+          });
+        })
+        .catch(error => console.error('Erro ao carregar lista de livros:', error));
+    }
     document.getElementById('compra-livro-form').addEventListener('submit', function(event) {
       event.preventDefault();
       const id = document.getElementById('livro-id').value;
-      const quantidade = document.getElementById('quantidade').value;
-      
-      fetch(`/livros/${id}/comprar`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ quantidade: quantidade })
+
+      fetch(`/livros/${id}`, {
+        method: 'DELETE'
       })
       .then(response => response.text())
       .then(message => alert(message))
-      .catch(error => console.error('Erro ao comprar livro:', error));
+      .catch(error => console.error('Erro ao remover livro:', error));
     });
+
+    // Chamada para carregar todos os livros inicialmente
+    document.addEventListener('DOMContentLoaded', carregarLivros);
+
+
   </script>
 </body>
 </html>

@@ -14,11 +14,11 @@ router.get('/', (req, res) => {
   });
 });
 
-// Rota para compra de um livro (diminuir quantidade)
+// Rota para compra de um livro (diminuir exemplares)
 router.post('/:id/comprar', (req, res) => {
   const id = req.params.id;
-  const quantidade = req.body.quantidade;
-  Livro.comprar(id, quantidade, (err) => {
+  const exemplares = req.body.exemplares;
+  Livro.comprar(id, exemplares, (err) => {
     if (err) {
       res.status(500).send(err.message);
     } else {
@@ -27,11 +27,11 @@ router.post('/:id/comprar', (req, res) => {
   });
 });
 
-// Rota para adição de exemplares de um livro (aumentar quantidade)
+// Rota para adição de exemplares de um livro (aumentar exemplares)
 router.post('/:id/adicionar', (req, res) => {
   const id = req.params.id;
-  const quantidade = req.body.quantidade;
-  Livro.adicionarExemplares(id, quantidade, (err) => {
+  const exemplares = req.body.exemplares;
+  Livro.adicionarExemplares(id, exemplares, (err) => {
     if (err) {
       res.status(500).send(err.message);
     } else {

@@ -11,8 +11,8 @@
   <form id="adicionar-exemplares-form">
     <label for="livro-id">ID do Livro:</label>
     <input type="number" id="livro-id" name="livro-id" required>
-    <label for="quantidade">Quantidade:</label>
-    <input type="number" id="quantidade" name="quantidade" required>
+    <label for="exemplares">exemplares:</label>
+    <input type="number" id="exemplares" name="exemplares" required>
     <button type="submit">Adicionar</button>
   </form>
 
@@ -20,14 +20,14 @@
     document.getElementById('adicionar-exemplares-form').addEventListener('submit', function(event) {
       event.preventDefault();
       const id = document.getElementById('livro-id').value;
-      const quantidade = document.getElementById('quantidade').value;
+      const exemplares = document.getElementById('exemplares').value;
       
       fetch(`/livros/${id}/adicionar`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ quantidade: quantidade })
+        body: JSON.stringify({ exemplares: exemplares })
       })
       .then(response => response.text())
       .then(message => alert(message))
