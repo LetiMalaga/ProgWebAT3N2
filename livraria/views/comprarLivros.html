@@ -49,19 +49,19 @@
     document.getElementById('compra-livro-form').addEventListener('submit', function(event) {
       event.preventDefault();
       const id = document.getElementById('livro-id').value;
-      const quantidade = document.getElementById('exemplares').value;
+      const exemplares = document.getElementById('exemplares').value;
 
       fetch(`/livros/${id}/comprar`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ quantidade: quantidade })
+        body: JSON.stringify({ exemplares: exemplares })
       })
-      .then(response => response.json())
-      .then(data => {
+      .then(response => response.text())
+      .then(message => {
         // Exibe mensagem de confirmação da compra
-        alert(`Compra realizada com sucesso! Novo número de exemplares: ${data.exemplares}`);
+        alert(message);
         // Atualiza a lista de livros após a compra
         carregarLivros();
       })

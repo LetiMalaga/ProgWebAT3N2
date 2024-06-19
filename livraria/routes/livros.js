@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const Livro = require('../models/livro');
-const db = require('../database');
 
 // Rota para listagem dos livros
 router.get('/', (req, res) => {
@@ -17,12 +16,35 @@ router.get('/', (req, res) => {
 // Rota para compra de um livro (diminuir exemplares)
 router.post('/:id/comprar', (req, res) => {
   const id = req.params.id;
-  const exemplares = req.body.exemplares;
-  Livro.comprar(id, exemplares, (err) => {
+  const exemplares = parseInt(req.body.exemplares);
+  
+  Livro.buscarPorId(id, (err, livro) => {
     if (err) {
       res.status(500).send(err.message);
+    } else if (!livro) {
+      res.status(404).send('Livro não encontrado');
     } else {
-      res.send('Compra realizada com sucesso!');
+      const novosExemplares = livro.exemplares - exemplares;
+      
+      if (novosExemplares < 0) {
+        res.status(400).send('Quantidade de exemplares insuficiente');
+      } else if (novosExemplares === 0) {
+        Livro.remover(id, (err) => {
+          if (err) {
+            res.status(500).send(err.message);
+          } else {
+            res.send('Compra realizada com sucesso! Todos os exemplares foram comprados e o livro foi removido.');
+          }
+        });
+      } else {
+        Livro.atualizarExemplares(id, novosExemplares, (err) => {
+          if (err) {
+            res.status(500).send(err.message);
+          } else {
+            res.send('Compra realizada com sucesso!');
+          }
+        });
+      }
     }
   });
 });
@@ -30,7 +52,7 @@ router.post('/:id/comprar', (req, res) => {
 // Rota para adição de exemplares de um livro (aumentar exemplares)
 router.post('/:id/adicionar', (req, res) => {
   const id = req.params.id;
-  const exemplares = req.body.exemplares;
+  const exemplares = parseInt(req.body.exemplares);
   Livro.adicionarExemplares(id, exemplares, (err) => {
     if (err) {
       res.status(500).send(err.message);
